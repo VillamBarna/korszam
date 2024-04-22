@@ -1,38 +1,34 @@
 #include <vector>
-#include <algorithm>
+#include <iostream>
 
 template<typename T>
 struct polinom {
     std::vector<T> egyutthatok;
 
-    polinom (std::vector<T> e) : egyutthatok{e} {
+    polinom<T> (std::vector<T> e) : egyutthatok{e} {
     };
 
-    polinom () : egyutthatok{std::vector<T> {}} {
+    polinom<T> () : egyutthatok{std::vector<T> {}} {
     };
 
-    polinom (size_t hossz) : egyutthatok{std::vector<T> (hossz)} {
-    };
-
-    polinom operator+(polinom<T> const& p2) const {
-        polinom<T> eredmeny{this->egyutthatok.size()};
-
-        std::transform(this->egyutthatok.begin(),
-                        this->egyutthatok.end(),
-                        p2.egyutthatok.begin(),
-                        eredmeny.egyutthatok.begin(),
-                        [](T const& x, T const& y) { return x+y; });
-        return eredmeny;
-    }
-
-    polinom operator-(polinom<T> const& p2) const {
-        polinom<T> eredmeny{this->egyutthatok.size()};
-
-        std::transform(this->egyutthatok.begin(),
-                        this->egyutthatok.end(),
-                        p2.egyutthatok.begin(),
-                        eredmeny.egyutthatok.begin(),
-                        [](T const& x, T const& y) { return x-y; });
-        return eredmeny;
+    polinom<T> (size_t hossz) : egyutthatok{std::vector<T> (hossz)} {
     };
 };
+
+template<typename T>
+polinom<T> operator+(polinom<T> const& p1, polinom<T> const& p2);
+
+template<typename T>
+polinom<T> operator-(polinom<T> const& p1, polinom<T> const& p2);
+
+template<typename T>
+polinom<T> dot(polinom<T> const& p1, polinom<T> const& p2);
+
+template<typename T>
+polinom<T> derivative(polinom<T> const& p, int rend);
+
+template<typename T>
+T integral(polinom<T> const& p, double also_h, double felso_h);
+
+template<typename T>
+std::ostream& operator<<(std::ostream& o, polinom<T> const& p);
